@@ -1,18 +1,9 @@
 // use std::process::Command;
 
-use std::{process::Command, str::Utf8Error};
+#![allow(dead_code)]
+#![allow(unused_variables)]
 
-// fn convert_vector_to_array<T, N>(v: Vec<T>) -> [T; N]
-// where
-//     T: Copy,
-// {
-//     let slice = v.as_slice();
-//     let array: [T; N] = match slice.try_into() {
-//         Ok(ba) => ba,
-//         Err(_) => panic!("Expected a Vec of length {} but it was {}", N, v.len()),
-//     };
-//     array
-// }
+use std::process::Command;
 
 #[tauri::command]
 pub fn start_my_sql() -> String {
@@ -36,16 +27,16 @@ pub fn run_test_script(name: &str) -> String {
         "postgres" => println!("postgres bero"),
         _ => println!("nope"),
     }
-    let mut output = Command::new("echo").arg("Hello world").output().unwrap();
+    let output = Command::new("echo").arg("Hello world").output().unwrap();
 
     // let out = output.stdout;
     println!("status {}", output.status);
 
-    let mut output_vector = output.stdout;
+    let output_vector = output.stdout;
 
-    let mut output_array = output_vector.as_slice();
+    let output_array = output_vector.as_slice();
 
-    let mut output_result = String::from_utf8(output_vector);
+    let output_result = String::from_utf8(output_vector);
 
     let return_value = match output_result {
         Ok(val) => val,

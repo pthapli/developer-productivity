@@ -2,9 +2,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 #![allow(dead_code)]
 #![allow(unused_variables)]
-use std::fmt::format;
 
-use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
+use tauri::{Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
+
 use tauri_plugin_positioner::{Position, WindowExt};
 mod scripts;
 mod test_module;
@@ -12,7 +12,13 @@ mod test_module;
 mod bash_command;
 use bash_command::run_bash_command;
 use scripts::script_runner;
-use test_module::{greet, run_test_script, start_my_sql, ungreet};
+use test_module::{greet, start_my_sql, ungreet};
+
+mod clipboard;
+use clipboard::clipboard;
+mod storage;
+
+
 
 fn main() {
     // let system_tray_menu = SystemTrayMenu::new();
@@ -26,7 +32,8 @@ fn main() {
             ungreet,
             start_my_sql,
             script_runner,
-            run_bash_command
+            run_bash_command,
+            clipboard
         ])
         .plugin(tauri_plugin_positioner::init())
         .system_tray(SystemTray::new().with_menu(system_tray_menu))

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
+import { readText } from "@tauri-apps/api/clipboard";
 import "./App.css";
 import { maxHeaderSize } from "http";
 import { Column } from "./components/wrappers/column";
@@ -26,20 +27,6 @@ function App() {
     }
   }
 
-  async function ungreet() {
-    console.log("running ungreet");
-    const response = await invoke("ungreet");
-
-    setMsg(response as string);
-  }
-  async function runTestScript() {
-    console.log("running test script");
-    const response = await invoke("run_test_script", { name: "my_sql" });
-
-    console.log({ response });
-    setMsg(response as string);
-  }
-
   //todo : make this dynamic as well
   async function freePort(port: number) {
     const response = await invoke("script_runner", { name: "free_port", port });
@@ -58,6 +45,16 @@ function App() {
     });
     setMsg(response as string);
   }
+
+  const handlePaste = async (event: any) => {
+    const text = await readText();
+    console.log({ text });
+    const response = await invoke("clipboard", {
+      text: "buddy",
+    });
+    setMsg(response as string);
+  };
+  async function getClipboardData() {}
 
   async function runBashCommand(command: string) {
     const response = await invoke("run_bash_command", {
@@ -85,11 +82,7 @@ function App() {
           handleClick={startMySqlContainer}
         />
 
-        <SingleInput
-          buttonName="just_a_button"
-          inputName="test-two"
-          handleClick={testFullCommand}
-        />
+        <button onClick={handlePaste} />
 
         <BashInput
           buttonName="Run bash command"

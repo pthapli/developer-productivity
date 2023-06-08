@@ -1,12 +1,13 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 use std::process::Command;
 
 pub struct ScriptData {
     port: u32,
 }
 
-pub fn run_bash_command(bash_command : &str){
-
-}
+pub fn run_bash_command(bash_command: &str) {}
 
 #[tauri::command]
 pub fn script_runner(name: &str, port: u32) -> String {
@@ -16,13 +17,13 @@ pub fn script_runner(name: &str, port: u32) -> String {
         "postgres" => String::from("postgres bero"),
         "free_port" => free_port(port),
         "full_script" => full_script("test_name"),
-        _ => log_data()
+        _ => log_data(),
     };
 
     return_value
 }
 
-fn full_script(name : &str)->String{
+fn full_script(name: &str) -> String {
     println!("Running full script function");
     let bash_command = "git confi user.name";
     // let bash_command = "ls /Users/pthapli/Desktop/scripts";
@@ -47,7 +48,6 @@ fn full_script(name : &str)->String{
         println!("Command failed with error code: {}", error_code);
         return String::from("Error in running command");
     }
-
 }
 
 fn log_data() -> String {
@@ -99,47 +99,4 @@ fn free_port(port: u32) -> String {
     let kill_command = Command::new("kill").arg("-9").arg(pid).output().unwrap();
     println!("port to be killed -> {}", port);
     pid.to_string()
-
-    // println!("todo : Freeing port {}", port);
-    // // return String::from("Acknowledgement from free_port");
-
-    // let command_string = "kill -9 $(lsof -i:3000 -t) 2> /dev/null";
-
-    // let test_string = format!("kill -9 $(lsof -i:{} -t) 2> /dev/null", { port });
-
-    // println!("hey bero  {} ", test_string);
-    // let port_input = format!("$(lsof -i:{} -t)", port);
-
-    // let output_test = Command::new("kill")
-    //     .arg("-9")
-    //     // .arg(port_input)
-    //     .arg("$(lsof")
-    //     .arg("-i:3000")
-    //     .arg("-t)")
-    //     .arg("2>")
-    //     .arg("/dev/null")
-    //     .output();
-
-    // let bitch = match output_test {
-    //     Ok(val) => val,
-    //     Err(err) => panic!("Could not resolve output() method"),
-    // };
-
-    // // return bitch;
-
-    // // let output = Command::new(test_string).output().unwrap();
-
-    // let output_vector = bitch.stdout;
-
-    // let output_result = String::from_utf8(output_vector);
-
-    // let return_value = match output_result {
-    //     Ok(val) => {
-    //         println!("Okay ran value");
-    //         val
-    //     }
-    //     Err(err) => String::from("Error when running script"),
-    // };
-
-    // return_value
 }

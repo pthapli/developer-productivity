@@ -18,6 +18,11 @@
         "execute": true,
         "sidecar": true,
         "open": true
+      },
+      "clipboard": {
+        "all": true,
+        "writeText": true,
+        "readText": true
       }
     },
     "systemTray": {
