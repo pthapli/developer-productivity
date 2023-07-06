@@ -48,7 +48,8 @@ function App() {
 
   const handlePaste = async (event: any) => {
     const text = await readText();
-    console.log({ text });
+
+    console.log("Pasted text : ", { text });
     const response = await invoke("clipboard", {
       text: "buddy",
     });

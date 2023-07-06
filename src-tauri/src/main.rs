@@ -17,7 +17,7 @@ use test_module::{greet, start_my_sql, ungreet};
 mod clipboard;
 use clipboard::clipboard;
 mod storage;
-
+mod clipboard_manager;
 
 
 fn main() {
