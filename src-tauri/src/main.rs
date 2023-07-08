@@ -14,17 +14,25 @@ use bash_command::run_bash_command;
 use scripts::script_runner;
 use test_module::{greet, start_my_sql, ungreet};
 
-mod clipboard;
-use clipboard::clipboard;
-mod storage;
 mod clipboard_manager;
+mod storage;
+mod mister_clipper;
+use mister_clipper::mister_clipper;
 
+use std::thread;
+use std::time::Duration;
 
 fn main() {
     // let system_tray_menu = SystemTrayMenu::new();
     // std::env::set_var("RUST_BACKTRACE", "full");
     let quit = tauri::CustomMenuItem::new("quit".to_string(), "Quit").accelerator("Cmd+Q");
     let system_tray_menu = SystemTrayMenu::new().add_item(quit);
+
+    thread::spawn(||{ 
+            println!("Bhai bhai");
+            clipboard_manager::add_clipboard_copy_event_listener_handler();
+            println!("Clipboard manager setup done");
+    });
 
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
@@ -33,11 +41,17 @@ fn main() {
             start_my_sql,
             script_runner,
             run_bash_command,
-            clipboard
+            mister_clipper
         ])
+
         .plugin(tauri_plugin_positioner::init())
         .system_tray(SystemTray::new().with_menu(system_tray_menu))
         .on_system_tray_event(|app, event| {
+
+            //WRONG PLACE TO REGISTER THE CLIPBOARD MANAGER EVENT
+            // println!("Bhai bhai");
+            // clipboard_manager::add_clipboard_copy_event_listener_handler();
+            // println!("Clipboard manager setup done");
             tauri_plugin_positioner::on_tray_event(app, &event);
             match event {
                 SystemTrayEvent::LeftClick {

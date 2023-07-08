@@ -9,6 +9,9 @@ import { SingleInput } from "./components/single-input";
 import { Row } from "./components/wrappers/row";
 import { BashInput } from "./components/bash-command-input";
 
+import { listen } from "@tauri-apps/api/event";
+import GlobalCopyListener from "./components/global-copy-listener";
+
 function App() {
   const [msg, setMsg] = useState("initial bero");
   const [name, setName] = useState("");
@@ -51,11 +54,19 @@ function App() {
 
     console.log("Pasted text : ", { text });
     const response = await invoke("clipboard", {
-      text: "buddy",
+      text,
     });
     setMsg(response as string);
   };
   async function getClipboardData() {}
+
+  //function to listen for clipboard copy evenrts and pass them to the backend
+  const listenToCopyEvent = async (event: any) => {
+    console.log("listenToCopy button pressed");
+    // await listen("click", (event: any) => {
+    //   console.log("CLICKED CALLED");
+    // });
+  };
 
   async function runBashCommand(command: string) {
     const response = await invoke("run_bash_command", {
@@ -83,7 +94,14 @@ function App() {
           handleClick={startMySqlContainer}
         />
 
-        <button onClick={handlePaste} />
+        <>
+          <button onClick={handlePaste}>Test Copy</button>
+        </>
+
+        <>
+          <GlobalCopyListener />
+          <button onClick={listenToCopyEvent}>Listen for copy event</button>
+        </>
 
         <BashInput
           buttonName="Run bash command"
