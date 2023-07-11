@@ -18,7 +18,8 @@ mod clipboard_manager;
 mod storage;
 mod mister_clipper;
 use mister_clipper::mister_clipper;
-
+mod filesave;
+use filesave::filesave;
 use std::thread;
 use std::time::Duration;
 
@@ -28,6 +29,7 @@ fn main() {
     let quit = tauri::CustomMenuItem::new("quit".to_string(), "Quit").accelerator("Cmd+Q");
     let system_tray_menu = SystemTrayMenu::new().add_item(quit);
 
+    //we start a separate thread on which we run the clipboard listener 
     thread::spawn(||{ 
             println!("Bhai bhai");
             clipboard_manager::add_clipboard_copy_event_listener_handler();
@@ -41,7 +43,8 @@ fn main() {
             start_my_sql,
             script_runner,
             run_bash_command,
-            mister_clipper
+            mister_clipper,
+            filesave
         ])
 
         .plugin(tauri_plugin_positioner::init())

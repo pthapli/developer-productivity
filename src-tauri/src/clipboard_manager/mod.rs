@@ -1,6 +1,8 @@
 use clipboard::{ClipboardContext, ClipboardProvider};
 use clipboard_master::{CallbackResult, ClipboardHandler, Master};
 
+use crate::storage;
+
 struct Handler;
 
 impl ClipboardHandler for Handler {
@@ -13,6 +15,7 @@ impl ClipboardHandler for Handler {
         println!("value_read_from_clipboard : {}",value_read_from_clipboard);
         // println!("VALUE READ FROM CLIPBOARD -> {:?}", ctx.get_contents().unwrap());
 
+        storage::write_item_to_clipboard_storage(value_read_from_clipboard);
         //todo : save the data to local storage
         CallbackResult::Next
     }
@@ -26,7 +29,6 @@ impl ClipboardHandler for Handler {
 pub fn add_clipboard_copy_event_listener_handler() {
     println!("Running add_clipboard_copy_event_listener_handler");
     let _ = Master::new(Handler).run();
-
 }
 
 pub fn copy_from_clipboard() -> String {

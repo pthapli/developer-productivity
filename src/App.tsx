@@ -58,15 +58,21 @@ function App() {
     });
     setMsg(response as string);
   };
+
+  const handleFileSave = async () => {
+    const response = await invoke("filesave");
+    setMsg(response as string);
+  };
+
   async function getClipboardData() {}
 
   //function to listen for clipboard copy evenrts and pass them to the backend
-  const listenToCopyEvent = async (event: any) => {
+  async function listenToCopyEvent(event: any) {
     console.log("listenToCopy button pressed");
     // await listen("click", (event: any) => {
     //   console.log("CLICKED CALLED");
     // });
-  };
+  }
 
   async function runBashCommand(command: string) {
     const response = await invoke("run_bash_command", {
@@ -99,8 +105,7 @@ function App() {
         </>
 
         <>
-          <GlobalCopyListener />
-          <button onClick={listenToCopyEvent}>Listen for copy event</button>
+          <button onClick={handleFileSave}>Test File Save</button>
         </>
 
         <BashInput
