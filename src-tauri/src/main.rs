@@ -15,9 +15,10 @@ use scripts::script_runner;
 use test_module::{greet, start_my_sql, ungreet};
 
 mod clipboard_manager;
-mod storage;
 mod mister_clipper;
+mod storage;
 use mister_clipper::mister_clipper;
+use mister_clipper::save_bookmark;
 mod filesave;
 use filesave::filesave;
 use std::thread;
@@ -29,11 +30,11 @@ fn main() {
     let quit = tauri::CustomMenuItem::new("quit".to_string(), "Quit").accelerator("Cmd+Q");
     let system_tray_menu = SystemTrayMenu::new().add_item(quit);
 
-    //we start a separate thread on which we run the clipboard listener 
-    thread::spawn(||{ 
-            println!("Bhai bhai");
-            clipboard_manager::add_clipboard_copy_event_listener_handler();
-            println!("Clipboard manager setup done");
+    //we start a separate thread on which we run the clipboard listener
+    thread::spawn(|| {
+        println!("Bhai bhai");
+        clipboard_manager::add_clipboard_copy_event_listener_handler();
+        println!("Clipboard manager setup done");
     });
 
     tauri::Builder::default()
@@ -44,13 +45,12 @@ fn main() {
             script_runner,
             run_bash_command,
             mister_clipper,
+            save_bookmark,
             filesave
         ])
-
         .plugin(tauri_plugin_positioner::init())
         .system_tray(SystemTray::new().with_menu(system_tray_menu))
         .on_system_tray_event(|app, event| {
-
             //WRONG PLACE TO REGISTER THE CLIPBOARD MANAGER EVENT
             // println!("Bhai bhai");
             // clipboard_manager::add_clipboard_copy_event_listener_handler();

@@ -9,7 +9,7 @@ import { BashInput } from "./components/bash-command-input";
 
 import { listen } from "@tauri-apps/api/event";
 import { Link, useNavigate } from "react-router-dom";
-import { ClipboardList } from "./components/clipboard/clipboard-main";
+import { CurrentClipboard } from "./components/clipboard/CurrentClipboard";
 
 function App() {
   const [msg, setMsg] = useState("initial bero");
@@ -116,6 +116,15 @@ function App() {
           }}
         >
           BERO PLIJ
+        </button>
+
+        <button
+          onClick={() => {
+            console.log("Navigating");
+            navigate("/clipboard");
+          }}
+        >
+          CLIPBOARD TABS
         </button>
         <BashInput
           buttonName="Run bash command"

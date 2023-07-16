@@ -3,7 +3,7 @@
 // use tauri::ClipboardManager;
 
 use crate::clipboard_manager;
-use crate::storage::{self,  Data};
+use crate::storage::{self, Data};
 /**
 *
 * 1. Save the clipboard values to local storage
@@ -16,6 +16,16 @@ pub fn mister_clipper() -> Vec<String> {
     println!("Running mister clipper");
 
     return storage::get_last_10_items_from_clipboard();
+    // return vec!["Hi".to_string(),"How are you".to_string()];
+}
+
+#[tauri::command]
+pub fn save_bookmark(item: &str) {
+    println!("====================================");
+    println!("SAVING BOOKMARK ->{}", item);
+
+    println!("====================================");
+
     // return vec!["Hi".to_string(),"How are you".to_string()];
 }
 

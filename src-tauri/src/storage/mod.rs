@@ -68,6 +68,14 @@ fn read_vector_from_file(filename: &str) -> Result<Vec<String>, Box<dyn std::err
     Ok(data.my_vector)
 }
 
+fn delete_item_from_file(filename : &str, item : &str){
+    //for bookmarking important things
+}
+
+fn add_item_to_file(){
+    //for bookmarking important things
+}
+
 pub fn write_item_to_clipboard_storage(value : String){ 
     //first get the vector from the file
     let mut vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/output.json").unwrap();

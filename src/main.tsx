@@ -10,7 +10,8 @@ import {
   Routes,
 } from "react-router-dom";
 import App from "./App";
-import { ClipboardList } from "./components/clipboard/clipboard-main";
+import { CurrentClipboard } from "./components/clipboard/CurrentClipboard";
+import ClipboardTab from "./components/clipboard/ClipboardTab";
 import ErrorPage from "./error-page";
 import "./styles.css";
 
@@ -18,7 +19,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/clipboard" element={<ClipboardList />} />
+      <Route path="/clipboard" element={<ClipboardTab />} />
     </Routes>
   </BrowserRouter>
 );
