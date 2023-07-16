@@ -106,7 +106,7 @@ pub fn test_clipboard_file_to_data(){
 pub fn get_last_10_items_from_clipboard()->Vec<String>{ 
     let vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/output.json").unwrap();
     println!("Vector is {:?}",vec);
-    return vec.as_slice()[vec.len()-10..].to_vec();
+    return vec.as_slice()[vec.len()-10..].to_vec()
 }
 
 

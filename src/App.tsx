@@ -9,7 +9,7 @@ import { BashInput } from "./components/bash-command-input";
 
 import { listen } from "@tauri-apps/api/event";
 import { Link, useNavigate } from "react-router-dom";
-import { InfiniteScrollList } from "./components/clipboard/clipboard-main";
+import { ClipboardList } from "./components/clipboard/clipboard-main";
 
 function App() {
   const [msg, setMsg] = useState("initial bero");
@@ -52,9 +52,9 @@ function App() {
     const text = await readText();
 
     console.log("Pasted text : ", { text });
-    const response = await invoke("clipboard", {
-      text,
-    });
+    // const response = await invoke("clipboard", {
+    //   text,
+    // });
     setMsg(response as string);
   };
 

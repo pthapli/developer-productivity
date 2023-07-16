@@ -3,7 +3,7 @@
 // use tauri::ClipboardManager;
 
 use crate::clipboard_manager;
-use crate::storage::{self, write_to_file, Data};
+use crate::storage::{self,  Data};
 /**
 *
 * 1. Save the clipboard values to local storage
@@ -12,11 +12,11 @@ use crate::storage::{self, write_to_file, Data};
 */
 
 #[tauri::command]
-pub fn mister_clipper(text: &str) {
-    // let copied_value = copy_from_clipboard();
-    println!("BERO testing the copied value: {}", text);
-    // println!("COPIED VALUE : {}",copied_value);
-    // test_storage()
+pub fn mister_clipper() -> Vec<String> {
+    println!("Running mister clipper");
+
+    return storage::get_last_10_items_from_clipboard();
+    // return vec!["Hi".to_string(),"How are you".to_string()];
 }
 
 fn copy_from_clipboard() -> String {

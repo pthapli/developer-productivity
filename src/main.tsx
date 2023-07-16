@@ -15,12 +15,10 @@ import ErrorPage from "./error-page";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/clipboard" element={<ClipboardList />} />
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/clipboard" element={<ClipboardList />} />
+    </Routes>
+  </BrowserRouter>
 );

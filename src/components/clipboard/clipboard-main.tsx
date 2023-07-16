@@ -1,32 +1,22 @@
+import { invoke } from "@tauri-apps/api";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const ClipboardList = () => {
+  // Call the rust backend to fetch the list of clipboard items
+
   // State to store the list items
-  const [listItems, setListItems] = useState(["item 1", "item 2", "item 3"]);
 
-  // State to track if more items can be loaded
-  const [hasMore, setHasMore] = useState(true);
+  const [listItems, setListItems] = useState(["Test item 1", "test item 2"]);
 
-  // Function to simulate loading more items
-  const loadMoreItems = () => {
-    // Simulating an API call to fetch more items
-    // Replace this with your actual data fetching logic
-    setTimeout(() => {
-      const newItems = [...listItems];
-      // Generate new items, for example:
-      for (let i = 0; i < 10; i++) {
-        newItems.push(`Item ${newItems.length + 1}`);
-      }
-
-      setListItems(newItems);
-      setHasMore(newItems.length < 50); // Stop loading more items after 50
-    }, 1000);
-  };
-
-  // Effect to load initial items
+  // // Effect to load initial items
   useEffect(() => {
-    loadMoreItems();
+    console.log("Running effect for getting the clipboard data bero");
+    invoke("mister_clipper").then((data) => {
+      console.log(data);
+
+      setListItems((data as Array<string>).reverse());
+    });
   }, []);
 
   // Function to handle scrolling
@@ -35,7 +25,7 @@ export const ClipboardList = () => {
       window.innerHeight + document.documentElement.scrollTop ===
       document.documentElement.offsetHeight
     ) {
-      loadMoreItems();
+      // loadMoreItems();
     }
   };
 
@@ -53,10 +43,15 @@ export const ClipboardList = () => {
     <div>
       <ul>
         {listItems.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li
+            key={index}
+            onClick={() => console.log("List item clicked bero: ", item)}
+          >
+            {item}
+          </li>
         ))}
       </ul>
-      {hasMore && <p>Loading more items...</p>}
+      {console.log("Rendering...")}
       <button onClick={() => navigate("/")}>Go back</button>
     </div>
   );
