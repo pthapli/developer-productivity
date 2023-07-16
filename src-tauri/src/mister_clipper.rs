@@ -20,13 +20,19 @@ pub fn mister_clipper() -> Vec<String> {
 }
 
 #[tauri::command]
-pub fn save_bookmark(item: &str) {
+pub fn save_bookmark(item: String) {
     println!("====================================");
     println!("SAVING BOOKMARK ->{}", item);
-
     println!("====================================");
+    return storage::add_item_to_bookmark_list(item);
+}
 
-    // return vec!["Hi".to_string(),"How are you".to_string()];
+#[tauri::command]
+pub fn get_bookmark_list() -> Vec<String> {
+    println!("====================================");
+    println!("GETTING BOOKMARK LIST->");
+    println!("====================================");
+    return storage::get_bookmark_list();
 }
 
 fn copy_from_clipboard() -> String {

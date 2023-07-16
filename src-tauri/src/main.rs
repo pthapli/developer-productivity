@@ -17,6 +17,7 @@ use test_module::{greet, start_my_sql, ungreet};
 mod clipboard_manager;
 mod mister_clipper;
 mod storage;
+use mister_clipper::get_bookmark_list;
 use mister_clipper::mister_clipper;
 use mister_clipper::save_bookmark;
 mod filesave;
@@ -46,6 +47,7 @@ fn main() {
             run_bash_command,
             mister_clipper,
             save_bookmark,
+            get_bookmark_list,
             filesave
         ])
         .plugin(tauri_plugin_positioner::init())

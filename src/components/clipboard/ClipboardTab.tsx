@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Tab from "../tabs/Tab";
 import Tabs from "../tabs/Tabs";
 import { CurrentClipboard } from "./CurrentClipboard";
+import { BookmarkClipboard } from "./BookmarkClipboard";
 
 function ClipboardTab() {
   console.log("RENDERING ClipboardTab");
@@ -13,7 +14,9 @@ function ClipboardTab() {
         <Tab title="Current Clipboard">
           <CurrentClipboard />
         </Tab>
-        <Tab title="Saved Clipboard">Strawberry is red</Tab>
+        <Tab title="Saved Clipboard">
+          <BookmarkClipboard />
+        </Tab>
       </Tabs>
     </div>
   );
