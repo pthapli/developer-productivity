@@ -61,7 +61,7 @@ fn main() {
             match event {
                 SystemTrayEvent::LeftClick {
                     position: _,
-                    size: _,
+                   size: _,
                     ..
                 } => {
                     let window = app.get_window("main").unwrap();

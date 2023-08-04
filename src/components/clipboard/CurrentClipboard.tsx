@@ -2,6 +2,10 @@ import { invoke } from "@tauri-apps/api";
 import { writeText } from "@tauri-apps/api/clipboard";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import StarButton from "../buttons/Starbutton";
+import { Row, RowEvenlySpace } from "../wrappers/row";
+import { Divider } from "../utility/divider";
+import { ClipboardItemButton } from "./ClipboardItemButton";
 
 export const CurrentClipboard = () => {
   // Call the rust backend to fetch the list of clipboard items
@@ -40,6 +44,8 @@ export const CurrentClipboard = () => {
 
   // Attach scroll event listener when the component mounts
   useEffect(() => {
+    console.log("Scroll handler useEffect");
+    console.log(window.innerWidth, window.innerHeight);
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -54,28 +60,27 @@ export const CurrentClipboard = () => {
 
   return (
     <div>
-      <ul>
+      <ul style={{ listStyle: "none", margin: "0 20px 0 20px", padding: "0" }}>
         {listItems.map((item, index) => (
           <li key={index}>
-            <p
-              onClick={() => {
-                listItemClickHandler(item);
-              }}
-            >
-              {item}
-            </p>
-            <button
-              onClick={() => {
-                handleBookmarkClick(item);
-              }}
-            >
-              bookmark
-            </button>
+            <RowEvenlySpace>
+              <ClipboardItemButton
+                onClick={() => {
+                  listItemClickHandler(item);
+                }}
+                text={item}
+              />
+
+              <StarButton
+                onClick={() => {
+                  handleBookmarkClick(item);
+                }}
+              />
+            </RowEvenlySpace>
+            <Divider />
           </li>
         ))}
       </ul>
-      {console.log("Rendering...")}
-      <button onClick={() => navigate("/")}>Go back</button>
     </div>
   );
 };

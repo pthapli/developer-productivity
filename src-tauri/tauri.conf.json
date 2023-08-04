@@ -45,10 +45,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 300,
+        "height": 600,
         "resizable": false,
         "title": "menubar",
-        "width": 300,
+        "width": 500,
         "visible": false,
         "hiddenTitle": true,
         "decorations": false,

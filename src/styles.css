@@ -14,7 +14,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.menu-container{
+.menu-container {
   background-color: red;
 }
 
@@ -44,9 +44,22 @@
   flex-direction: row;
 }
 
-.column{
+.row-evenly-spaced {
   display: flex;
-  flex-direction : column;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper-scroll {
+  /* Set the height and add overflow properties for scrolling */
+  height: 300px; /* Adjust the height to your desired value */
+  overflow-y: auto;
+  /* You can also add any other desired styling here */
 }
 
 a {
@@ -94,12 +107,11 @@ button {
   outline: none;
 }
 
-.custom-button{
-    background-color: green; /* Green */
-    border: none;
-    color: white;
-    text-align: center;
-
+.custom-button {
+  background-color: green; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
 }
 
 #greet-input {
@@ -124,4 +136,15 @@ button {
   button:active {
     background-color: #0f0f0f69;
   }
+}
+
+.star-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.star {
+  font-size: 24px;
+  color: gold;
 }

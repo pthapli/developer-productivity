@@ -1,7 +1,10 @@
 import { invoke } from "@tauri-apps/api";
 import { writeText } from "@tauri-apps/api/clipboard";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { RowEvenlySpace } from "../wrappers/row";
+import { ClipboardItemButton } from "./ClipboardItemButton";
+import { Divider } from "../utility/divider";
 
 export const BookmarkClipboard = () => {
   // Call the rust backend to fetch the list of clipboard items
@@ -22,6 +25,10 @@ export const BookmarkClipboard = () => {
 
   // Function to handle scrolling
   const handleScroll = () => {
+    console.log("Dimensions : ");
+
+    console.log(window.innerHeight, window.innerWidth);
+
     if (
       window.innerHeight + document.documentElement.scrollTop ===
       document.documentElement.offsetHeight
@@ -46,21 +53,21 @@ export const BookmarkClipboard = () => {
 
   return (
     <div>
-      <ul>
+      <ul style={{ listStyle: "none", margin: "0 20px 0 20px", padding: "0" }}>
         {listItems.map((item, index) => (
           <li key={index}>
-            <p
-              onClick={() => {
-                listItemClickHandler(item);
-              }}
-            >
-              {item}
-            </p>
+            <RowEvenlySpace>
+              <ClipboardItemButton
+                onClick={() => {
+                  listItemClickHandler(item);
+                }}
+                text={item}
+              />
+            </RowEvenlySpace>
+            <Divider />
           </li>
         ))}
       </ul>
-      {console.log("Rendering bookmark list...")}
-      <button onClick={() => navigate("/")}>Go back</button>
     </div>
   );
 };

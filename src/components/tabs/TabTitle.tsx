@@ -7,9 +7,5 @@ type Props = {
 };
 
 export const TabTitle: React.FC<Props> = ({ title, setSelectedTab, index }) => {
-  return (
-    <li>
-      <button onClick={() => setSelectedTab(index)}>{title}</button>
-    </li>
-  );
+  return <button onClick={() => setSelectedTab(index)}>{title}</button>;
 };

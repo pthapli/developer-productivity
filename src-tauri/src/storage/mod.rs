@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 use serde::{Deserialize, Serialize};
-use std::fs::File;
+use std::{fs::File, collections::HashMap};
 mod traits;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -118,13 +118,13 @@ pub fn test_clipboard_data_to_file() {
 //code test function to read the vector from the file
 pub fn test_clipboard_file_to_data() {
     let vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/output.json").unwrap();
-    println!("Vector is {:?}", vec);
+    // println!("Vector is {:?}", vec);
 }
 
 //function to get last 10 clipboard items from the file
 pub fn get_last_10_items_from_clipboard() -> Vec<String> {
     let vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/output.json").unwrap();
-    println!("Vector is {:?}", vec);
+    // println!("Vector is {:?}", vec);
     return vec.as_slice()[vec.len() - 10..].to_vec();
 }
 
@@ -132,7 +132,7 @@ pub fn save_to_bookmark_list(item: &str) {}
 
 pub fn get_bookmark_list() -> Vec<String> {
     let vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/bookmarks.json").unwrap();
-    println!("Vector is {:?}", vec);
+    // println!("Vector is {:?}", vec);
     vec
 }
 
@@ -151,3 +151,11 @@ pub fn add_item_to_bookmark_list(item: String) {
         println!("Vector saved to file successfully!");
     }
 }
+
+//
+//
+// Below are the functions for implementing the functionality using a set 
+//
+//
+//
+

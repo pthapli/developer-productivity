@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import { TabTitle } from "./TabTitle";
+import { Row } from "../wrappers/row";
 
 type Props = {
   children: ReactElement[];
@@ -10,7 +11,7 @@ const Tabs: React.FC<Props> = ({ children }) => {
 
   return (
     <div>
-      <ul>
+      <Row>
         {children.map((item, index) => (
           <TabTitle
             key={index}
@@ -19,7 +20,7 @@ const Tabs: React.FC<Props> = ({ children }) => {
             setSelectedTab={setSelectedTab}
           />
         ))}
-      </ul>
+      </Row>
       {children[selectedTab]}
     </div>
   );
