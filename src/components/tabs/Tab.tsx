@@ -1,10 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-type Props = {
-  title: string;
-};
+interface Props {
+  children?: ReactNode;
+  // any props that come into the component
+}
 
-const Tab: any = ({ children }) => {
+const Tab: any = ({ children }: Props) => {
   return <div>{children}</div>;
 };
 

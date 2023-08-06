@@ -16,6 +16,7 @@
 
 .menu-container {
   background-color: red;
+  height: initial;
 }
 
 .container {

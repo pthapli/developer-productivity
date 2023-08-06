@@ -13,6 +13,8 @@ export const BookmarkClipboard = () => {
 
   const [listItems, setListItems] = useState(["Test item 1", "test item 2"]);
 
+  const [deleteItem, setDeleteItem] = useState(true);
+
   // Effect to load initial items
   useEffect(() => {
     console.log("Running effect for getting the clipboard data bero");
@@ -21,7 +23,7 @@ export const BookmarkClipboard = () => {
 
       setListItems((data as Array<string>).reverse());
     });
-  }, []);
+  }, [deleteItem]);
 
   // Function to handle scrolling
   const handleScroll = () => {
@@ -51,6 +53,14 @@ export const BookmarkClipboard = () => {
     await writeText(item);
   };
 
+  const handleBookmarkDelete = async (item: string) => {
+    console.log("DATA ", item);
+    invoke("delete_saved_bookmark", { item: item }).then((data) => {
+      console.log(data);
+      setDeleteItem(!deleteItem);
+    });
+  };
+
   return (
     <div>
       <ul style={{ listStyle: "none", margin: "0 20px 0 20px", padding: "0" }}>
@@ -63,6 +73,14 @@ export const BookmarkClipboard = () => {
                 }}
                 text={item}
               />
+
+              <button
+                onClick={() => {
+                  handleBookmarkDelete(item);
+                }}
+              >
+                delete
+              </button>
             </RowEvenlySpace>
             <Divider />
           </li>

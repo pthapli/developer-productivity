@@ -20,6 +20,7 @@ mod storage;
 use mister_clipper::get_bookmark_list;
 use mister_clipper::mister_clipper;
 use mister_clipper::save_bookmark;
+use mister_clipper::delete_saved_bookmark;
 mod filesave;
 use filesave::filesave;
 use std::thread;
@@ -47,6 +48,7 @@ fn main() {
             run_bash_command,
             mister_clipper,
             save_bookmark,
+            delete_saved_bookmark,
             get_bookmark_list,
             filesave
         ])
@@ -61,7 +63,7 @@ fn main() {
             match event {
                 SystemTrayEvent::LeftClick {
                     position: _,
-                   size: _,
+                    size: _,
                     ..
                 } => {
                     let window = app.get_window("main").unwrap();

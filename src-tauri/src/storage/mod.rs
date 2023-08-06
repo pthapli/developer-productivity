@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 use serde::{Deserialize, Serialize};
-use std::{fs::File, collections::HashMap};
+use std::{collections::HashMap, fs::File};
 mod traits;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -152,10 +152,32 @@ pub fn add_item_to_bookmark_list(item: String) {
     }
 }
 
-//
-//
-// Below are the functions for implementing the functionality using a set 
-//
-//
-//
+pub fn delete_item_from_bookmark_list(item: String) {
+    println!("{}", item);
+    let mut vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/bookmarks.json")
+        .unwrap_or(Vec::new());
 
+    delete_all_occurences_of_item_from_vector(&mut vec, &item);
+
+    //save vector back to file
+    let bookmark_struct = ClipboardData { my_vector: vec };
+    if let Err(err) = save_vector_to_file(
+        &bookmark_struct,
+        "/Users/pthapli/Desktop/scripts/linux/bookmarks.json",
+    ) {
+        eprintln!("Error saving vector to file: {}", err);
+    } else {
+        println!("Vector saved to file successfully!");
+    }
+}
+
+fn delete_all_occurences_of_item_from_vector(vec: &mut Vec<String>, item: &String) {
+    vec.retain(|x: &String| x != item)
+}
+
+//
+//
+// Below are the functions for implementing the functionality using a set
+//
+//
+//

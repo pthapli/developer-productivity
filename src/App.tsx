@@ -48,76 +48,16 @@ function App() {
     setMsg(response as string);
   }
 
-  const handlePaste = async (event: any) => {
-    const text = await readText();
-
-    console.log("Pasted text : ", { text });
-    // const response = await invoke("clipboard", {
-    //   text,
-    // });
-    setMsg(response as string);
-  };
-
-  const handleFileSave = async () => {
-    const response = await invoke("filesave");
-    setMsg(response as string);
-  };
-
-  async function getClipboardData() {}
-
-  //function to listen for clipboard copy evenrts and pass them to the backend
-  async function listenToCopyEvent(event: any) {
-    console.log("listenToCopy button pressed");
-    // await listen("click", (event: any) => {
-    //   console.log("CLICKED CALLED");
-    // });
-  }
-
-  async function runBashCommand(command: string) {
-    const response = await invoke("run_bash_command", {
-      bashCommand: command,
-    });
-    setMsg(response as string);
-  }
-
   const navigate = useNavigate();
 
   return (
     <div className="menu-container row">
       <Column>
-        {msg}
-        {/* <button onClick={greet}>bero press me</button>
-          <button onClick={ungreet}>bero press ungreet</button>
-          <button onClick={runTestScript}>mysql bero</button> */}
-        {/* <button onClick={freePort}>Free Port</button> */}
         <SingleInput
-          buttonName="free"
+          buttonName="free port"
           inputName="port"
           handleClick={freePort}
         />
-        <SingleInput
-          buttonName="bero"
-          inputName="test-one"
-          handleClick={startMySqlContainer}
-        />
-
-        <>
-          <button onClick={handlePaste}>Test Copy</button>
-        </>
-
-        <>
-          <button onClick={handleFileSave}>Test File Save</button>
-        </>
-
-        <button
-          onClick={() => {
-            console.log("Navigating");
-            navigate("/clipboard");
-          }}
-        >
-          BERO PLIJ
-        </button>
-
         <button
           onClick={() => {
             console.log("Navigating");
@@ -126,11 +66,6 @@ function App() {
         >
           CLIPBOARD TABS
         </button>
-        <BashInput
-          buttonName="Run bash command"
-          inputName="test-bash-command"
-          handleClick={runBashCommand}
-        />
       </Column>
     </div>
   );

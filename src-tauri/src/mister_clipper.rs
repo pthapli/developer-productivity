@@ -27,6 +27,15 @@ pub fn save_bookmark(item: String) {
     return storage::add_item_to_bookmark_list(item);
 }
 
+
+#[tauri::command]
+pub fn delete_saved_bookmark(item: String) {
+    println!("====================================");
+    println!("DELETE BOOKMARK ->{}", item);
+    println!("====================================");
+    return storage::delete_item_from_bookmark_list(item);
+}
+
 #[tauri::command]
 pub fn get_bookmark_list() -> Vec<String> {
     println!("====================================");

@@ -33,7 +33,7 @@
     "bundle": {
       "active": true,
       "icon": [],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.pt.dev",
       "targets": "all"
     },
     "security": {
