@@ -50,6 +50,11 @@ function App() {
 
   const navigate = useNavigate();
 
+  const generateUuid = async () => {
+    const response = await invoke("generate_uuid");
+    console.log(response);
+  };
+
   return (
     <div className="menu-container row">
       <Column>
@@ -65,6 +70,14 @@ function App() {
           }}
         >
           CLIPBOARD TABS
+        </button>
+
+        <button
+          onClick={() => {
+            navigate("/uuid");
+          }}
+        >
+          UUID
         </button>
       </Column>
     </div>

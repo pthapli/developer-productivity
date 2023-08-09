@@ -17,6 +17,7 @@ use test_module::{greet, start_my_sql, ungreet};
 mod clipboard_manager;
 mod mister_clipper;
 mod storage;
+mod generators;
 use mister_clipper::get_bookmark_list;
 use mister_clipper::mister_clipper;
 use mister_clipper::save_bookmark;
@@ -24,7 +25,10 @@ use mister_clipper::delete_saved_bookmark;
 mod filesave;
 use filesave::filesave;
 use std::thread;
-use std::time::Duration;
+
+use generators::uuid::generate_uuid;
+
+
 
 fn main() {
     // let system_tray_menu = SystemTrayMenu::new();
@@ -50,7 +54,8 @@ fn main() {
             save_bookmark,
             delete_saved_bookmark,
             get_bookmark_list,
-            filesave
+            filesave,
+            generate_uuid
         ])
         .plugin(tauri_plugin_positioner::init())
         .system_tray(SystemTray::new().with_menu(system_tray_menu))

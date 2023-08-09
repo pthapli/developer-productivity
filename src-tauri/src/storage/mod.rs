@@ -85,6 +85,11 @@ pub fn write_item_to_clipboard_storage(value: String) {
     let mut vec =
         read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/output.json").unwrap();
 
+
+
+    //delete the previous occurencies of value in the vector
+    delete_all_occurences_of_item_from_vector(&mut vec, &value);
+
     //append value to the vector
     vec.push(value);
 
@@ -172,6 +177,7 @@ pub fn delete_item_from_bookmark_list(item: String) {
 }
 
 fn delete_all_occurences_of_item_from_vector(vec: &mut Vec<String>, item: &String) {
+    println!("Deleting occurences");
     vec.retain(|x: &String| x != item)
 }
 
