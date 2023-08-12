@@ -11,7 +11,6 @@ function UuidTab() {
   const [uuid, setUUid] = useState("");
   const generateUuid = async () => {
     const response = await invoke("generate_uuid");
-    console.log(response);
     writeText(response as string);
     setUUid(response as string);
   };
@@ -23,7 +22,6 @@ function UuidTab() {
       style={{
         position: "initial",
         padding: "200",
-        // margin: "20px 50px 20px 20px",
       }}
     >
       <Column>
