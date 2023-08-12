@@ -12,23 +12,19 @@ mod test_module;
 mod bash_command;
 use bash_command::run_bash_command;
 use scripts::script_runner;
-use test_module::{greet, start_my_sql, ungreet};
+use test_module::greet;
 
 mod clipboard_manager;
-mod mister_clipper;
-mod storage;
+mod clipper;
 mod generators;
-use mister_clipper::get_bookmark_list;
-use mister_clipper::mister_clipper;
-use mister_clipper::save_bookmark;
-use mister_clipper::delete_saved_bookmark;
-mod filesave;
-use filesave::filesave;
+mod storage;
+use clipper::delete_saved_bookmark;
+use clipper::get_bookmark_list;
+use clipper::get_clipboard_entries;
+use clipper::save_bookmark;
 use std::thread;
 
 use generators::uuid::generate_uuid;
-
-
 
 fn main() {
     // let system_tray_menu = SystemTrayMenu::new();
@@ -46,24 +42,17 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             greet,
-            ungreet,
-            start_my_sql,
             script_runner,
             run_bash_command,
-            mister_clipper,
+            get_clipboard_entries,
             save_bookmark,
             delete_saved_bookmark,
             get_bookmark_list,
-            filesave,
             generate_uuid
         ])
         .plugin(tauri_plugin_positioner::init())
         .system_tray(SystemTray::new().with_menu(system_tray_menu))
         .on_system_tray_event(|app, event| {
-            //WRONG PLACE TO REGISTER THE CLIPBOARD MANAGER EVENT
-            // println!("Bhai bhai");
-            // clipboard_manager::add_clipboard_copy_event_listener_handler();
-            // println!("Clipboard manager setup done");
             tauri_plugin_positioner::on_tray_event(app, &event);
             match event {
                 SystemTrayEvent::LeftClick {

@@ -17,7 +17,7 @@ export const CurrentClipboard = () => {
   // Effect to load initial items
   useEffect(() => {
     console.log("Running effect for getting the clipboard data bero");
-    invoke("mister_clipper").then((data) => {
+    invoke("get_clipboard_entries").then((data) => {
       console.log(data);
 
       setListItems((data as Array<string>).reverse());

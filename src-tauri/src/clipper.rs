@@ -12,7 +12,7 @@ use crate::storage::{self, Data};
 */
 
 #[tauri::command]
-pub fn mister_clipper() -> Vec<String> {
+pub fn get_clipboard_entries() -> Vec<String> {
     println!("Running mister clipper");
 
     return storage::get_last_10_items_from_clipboard();
@@ -26,7 +26,6 @@ pub fn save_bookmark(item: String) {
     println!("====================================");
     return storage::add_item_to_bookmark_list(item);
 }
-
 
 #[tauri::command]
 pub fn delete_saved_bookmark(item: String) {
