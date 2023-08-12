@@ -1,33 +1,13 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
-import { readText } from "@tauri-apps/api/clipboard";
 import "./App.css";
 import { Column } from "./components/wrappers/column";
 import { SingleInput } from "./components/single-input";
-import { Row } from "./components/wrappers/row";
-import { BashInput } from "./components/bash-command-input";
 
-import { listen } from "@tauri-apps/api/event";
-import { Link, useNavigate } from "react-router-dom";
-import { CurrentClipboard } from "./components/clipboard/CurrentClipboard";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [msg, setMsg] = useState("initial bero");
-  const [name, setName] = useState("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    // setGreetMsg(await invoke("greet"));
-
-    console.log("greet ran");
-    try {
-      const response = await invoke("greet", { name: "mister B2" });
-      console.log({ response });
-      setMsg(response as string);
-    } catch (error) {
-      console.log("error bero");
-    }
-  }
 
   //todo : make this dynamic as well
   async function freePort(port: number) {
@@ -35,25 +15,7 @@ function App() {
     setMsg(response as string);
   }
 
-  async function startMySqlContainer() {
-    const response = await invoke("script_runner", { name: "my_sql" });
-    setMsg(response as string);
-  }
-
-  async function testFullCommand(port: number) {
-    const response = await invoke("script_runner", {
-      name: "full_script",
-      port,
-    });
-    setMsg(response as string);
-  }
-
   const navigate = useNavigate();
-
-  const generateUuid = async () => {
-    const response = await invoke("generate_uuid");
-    console.log(response);
-  };
 
   return (
     <div className="menu-container row">
