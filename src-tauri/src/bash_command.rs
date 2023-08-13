@@ -3,7 +3,6 @@ use std::process::Command;
 #[tauri::command]
 pub fn run_bash_command(bash_command: &str) -> String {
     println!("Running full script function");
-    println!("COmmand valud below : -=.......");
     println!("{}", bash_command);
     // let bash_command = "ls /Users/pthapli/Desktop/scripts";
 

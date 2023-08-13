@@ -14,7 +14,6 @@ function ClipboardTab() {
       style={{
         position: "initial",
         padding: "200",
-        // margin: "20px 50px 20px 20px",
       }}
     >
       <Column>
