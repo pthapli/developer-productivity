@@ -71,8 +71,6 @@ function App() {
         >
           UUID
         </button>
-
-        <button onClick={testHandleEvent}>TEST</button>
       </Column>
     </div>
   );

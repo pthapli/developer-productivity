@@ -7,6 +7,8 @@ import { Row, RowEvenlySpace } from "../wrappers/row";
 import { Divider } from "../utility/divider";
 import { ClipboardItemButton } from "./ClipboardItemButton";
 
+import { emit, listen } from "@tauri-apps/api/event";
+
 export const CurrentClipboard = () => {
   // Call the rust backend to fetch the list of clipboard items
 
@@ -41,6 +43,24 @@ export const CurrentClipboard = () => {
       console.log("Bookmark saved");
     });
   };
+
+  //receive event from rust backend to rerender the UI when a copy event happens
+  useEffect(() => {
+    const unlisten = listen("clipboard_event", (event) => {
+      // event.event is the event name (useful if you want to use a single callback fn for multiple event types)
+      // event.payload is the payload object
+      console.log("EVENT RECEIVED FROM THE BACKEND inside useEffect");
+      console.log(event);
+
+      invoke("get_clipboard_entries").then((data) => {
+        console.log(data);
+
+        setListItems((data as Array<string>).reverse());
+      });
+    }).then((res) => {
+      console.log("EVENT RESPONSE ", res);
+    });
+  }, []);
 
   // Attach scroll event listener when the component mounts
   useEffect(() => {
