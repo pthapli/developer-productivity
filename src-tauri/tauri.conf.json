@@ -26,13 +26,15 @@
       }
     },
     "systemTray": {
-      "iconPath": "icons/icon.png",
+      "iconPath": "icons/Devproductivity.png",
       "iconAsTemplate": true,
       "menuOnLeftClick": false
     },
     "bundle": {
       "active": true,
-      "icon": [],
+      "icon": [
+        "icons/Devproductivity.png"
+      ],
       "identifier": "com.pt.dev",
       "targets": "all"
     },
@@ -53,7 +55,8 @@
         "hiddenTitle": true,
         "decorations": false,
         "focus": false,
-        "transparent": false
+        "transparent": false,
+        "alwaysOnTop": true
       }
     ]
   }

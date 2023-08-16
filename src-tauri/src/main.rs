@@ -13,6 +13,7 @@ mod bash_command;
 use bash_command::run_bash_command;
 use scripts::script_runner;
 use test_module::greet;
+use test_module::start_clipboard_listener;
 
 mod clipboard_manager;
 mod clipper;
@@ -33,11 +34,11 @@ fn main() {
     let system_tray_menu = SystemTrayMenu::new().add_item(quit);
 
     //we start a separate thread on which we run the clipboard listener
-    thread::spawn(|| {
-        println!("Bhai bhai");
-        clipboard_manager::add_clipboard_copy_event_listener_handler();
-        println!("Clipboard manager setup done");
-    });
+    // thread::spawn(|| {
+    //     println!("Bhai bhai");
+    //     clipboard_manager::add_clipboard_copy_event_listener_handler();
+    //     println!("Clipboard manager setup done");
+    // });
 
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
@@ -48,7 +49,8 @@ fn main() {
             save_bookmark,
             delete_saved_bookmark,
             get_bookmark_list,
-            generate_uuid
+            generate_uuid,
+            start_clipboard_listener
         ])
         .plugin(tauri_plugin_positioner::init())
         .system_tray(SystemTray::new().with_menu(system_tray_menu))
