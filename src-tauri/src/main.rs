@@ -23,7 +23,6 @@ use clipper::delete_saved_bookmark;
 use clipper::get_bookmark_list;
 use clipper::get_clipboard_entries;
 use clipper::save_bookmark;
-use std::thread;
 
 use generators::uuid::generate_uuid;
 

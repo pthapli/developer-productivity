@@ -3,7 +3,7 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
-use std::{process::Command, thread};
+use std::thread;
 
 use tauri::Window;
 

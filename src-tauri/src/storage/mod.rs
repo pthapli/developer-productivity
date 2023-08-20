@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 use serde::{Deserialize, Serialize};
-use std::{collections::HashMap, fs::File};
+use std::fs::File;
 mod traits;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -46,9 +46,16 @@ pub fn serialize_struct(data: &Data) -> Option<String> {
 }
 
 //-----------------------------------new implementation below---------------
+
+#[derive(Debug, Serialize, Deserialize, Default,  Clone, PartialEq)]
+pub struct ClipboardItemData {
+    pub value: String,
+    pub context: String, //context signifies
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 struct ClipboardData {
-    my_vector: Vec<String>,
+    my_vector: Vec<ClipboardItemData>,
 }
 
 fn save_vector_to_file(
@@ -63,7 +70,9 @@ fn save_vector_to_file(
     Ok(())
 }
 
-fn read_vector_from_file(filename: &str) -> Result<Vec<String>, Box<dyn std::error::Error>> {
+fn read_vector_from_file(
+    filename: &str,
+) -> Result<Vec<ClipboardItemData>, Box<dyn std::error::Error>> {
     let file = File::open(filename)?;
     let reader = std::io::BufReader::new(file);
 
@@ -80,12 +89,10 @@ fn add_item_to_file() {
     //for bookmarking important things
 }
 
-pub fn write_item_to_clipboard_storage(value: String) {
+pub fn write_item_to_clipboard_storage(value: ClipboardItemData) {
     //first get the vector from the file
-    let mut vec =
-        read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/output.json").unwrap();
-
-
+    let mut vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/output.json")
+        .unwrap_or_default();
 
     //delete the previous occurencies of value in the vector
     delete_all_occurences_of_item_from_vector(&mut vec, &value);
@@ -108,16 +115,16 @@ pub fn write_item_to_clipboard_storage(value: String) {
 
 //code test function to write data to a vector and save it to file
 pub fn test_clipboard_data_to_file() {
-    let my_vector = vec!["Bhai ".to_string(), "Kaise ho bero".to_string()];
-    let clipboard_struct = ClipboardData { my_vector };
-    if let Err(err) = save_vector_to_file(
-        &clipboard_struct,
-        "/Users/pthapli/Desktop/scripts/linux/output.json",
-    ) {
-        eprintln!("Error saving vector to file: {}", err);
-    } else {
-        println!("Vector saved to file successfully!");
-    }
+    // let my_vector = vec!["Bhai ".to_string(), "Kaise ho bero".to_string()];
+    // let clipboard_struct = ClipboardData { my_vector };
+    // if let Err(err) = save_vector_to_file(
+    //     &clipboard_struct,
+    //     "/Users/pthapli/Desktop/scripts/linux/output.json",
+    // ) {
+    //     eprintln!("Error saving vector to file: {}", err);
+    // } else {
+    //     println!("Vector saved to file successfully!");
+    // }
 }
 
 //code test function to read the vector from the file
@@ -127,24 +134,34 @@ pub fn test_clipboard_file_to_data() {
 }
 
 //function to get last 10 clipboard items from the file
-pub fn get_last_10_items_from_clipboard() -> Vec<String> {
+pub fn get_last_10_items_from_clipboard() -> Vec<ClipboardItemData> {
     let vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/output.json").unwrap();
-    // println!("Vector is {:?}", vec);
-    return vec.as_slice()[vec.len() - 10..].to_vec();
+    println!("Vector is {:?}", vec);
+    //TODO : uncomment
+    // return vec;
+    let last_10_items: Vec<&ClipboardItemData> = vec.iter().rev().take(10).collect();
+    let mut new_vec: Vec<ClipboardItemData> = vec![];
+    for item in last_10_items {
+        println!("{:?}", item);
+        new_vec.push(item.clone())
+    }
+
+    new_vec
+    
 }
 
 pub fn save_to_bookmark_list(item: &str) {}
 
-pub fn get_bookmark_list() -> Vec<String> {
+pub fn get_bookmark_list() -> Vec<ClipboardItemData> {
     let vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/bookmarks.json").unwrap();
     // println!("Vector is {:?}", vec);
     vec
 }
 
-pub fn add_item_to_bookmark_list(item: String) {
+pub fn add_item_to_bookmark_list(clipboard_item_data: ClipboardItemData){
     let mut vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/bookmarks.json")
         .unwrap_or(Vec::new());
-    vec.push(item);
+    vec.push(clipboard_item_data);
 
     let bookmark_struct = ClipboardData { my_vector: vec };
     if let Err(err) = save_vector_to_file(
@@ -157,8 +174,8 @@ pub fn add_item_to_bookmark_list(item: String) {
     }
 }
 
-pub fn delete_item_from_bookmark_list(item: String) {
-    println!("{}", item);
+pub fn delete_item_from_bookmark_list(item: ClipboardItemData) {
+    println!("{:?}", item);
     let mut vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/bookmarks.json")
         .unwrap_or(Vec::new());
 
@@ -176,9 +193,12 @@ pub fn delete_item_from_bookmark_list(item: String) {
     }
 }
 
-fn delete_all_occurences_of_item_from_vector(vec: &mut Vec<String>, item: &String) {
+fn delete_all_occurences_of_item_from_vector(
+    vec: &mut Vec<ClipboardItemData>,
+    item: &ClipboardItemData,
+) {
     println!("Deleting occurences");
-    vec.retain(|x: &String| x != item)
+    vec.retain(|x: &ClipboardItemData| x != item)
 }
 
 //

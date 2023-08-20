@@ -14,15 +14,16 @@ export const CurrentClipboard = () => {
 
   // State to store the list items
 
-  const [listItems, setListItems] = useState(["Test item 1", "test item 2"]);
+  const [listItems, setListItems] = useState([{ value: "test", context: "" }]);
 
   // Effect to load initial items
   useEffect(() => {
     console.log("Running effect for getting the clipboard data bero");
-    invoke("get_clipboard_entries").then((data) => {
-      console.log(data);
-
-      setListItems((data as Array<string>).reverse());
+    invoke<Array<{ context: string; value: string }>>(
+      "get_clipboard_entries"
+    ).then((data) => {
+      console.log("Data for last 10 clipboard entries : ", data);
+      setListItems(data);
     });
   }, []);
 
@@ -37,11 +38,14 @@ export const CurrentClipboard = () => {
   };
 
   //Function to save bookmarked items
-  const handleBookmarkClick = (savedItem: string) => {
-    console.log("Handling click on bookmark", savedItem);
-    invoke("save_bookmark", { item: savedItem }).then(() => {
-      console.log("Bookmark saved");
-    });
+  const handleBookmarkClick = (item: { value: string; context: string }) => {
+    invoke("save_bookmark", { item })
+      .then(() => {
+        console.log("Bookmark saved");
+      })
+      .catch((error) => {
+        console.log("Error ", error);
+      });
   };
 
   //receive event from rust backend to rerender the UI when a copy event happens
@@ -52,10 +56,12 @@ export const CurrentClipboard = () => {
       console.log("EVENT RECEIVED FROM THE BACKEND inside useEffect");
       console.log(event);
 
-      invoke("get_clipboard_entries").then((data) => {
+      invoke<Array<{ context: string; value: string }>>(
+        "get_clipboard_entries"
+      ).then((data) => {
         console.log(data);
 
-        setListItems((data as Array<string>).reverse());
+        setListItems(data);
       });
     }).then((res) => {
       console.log("EVENT RESPONSE ", res);
@@ -86,9 +92,9 @@ export const CurrentClipboard = () => {
             <RowEvenlySpace>
               <ClipboardItemButton
                 onClick={() => {
-                  listItemClickHandler(item);
+                  listItemClickHandler(item.value);
                 }}
-                text={item}
+                text={item.value}
               />
 
               <StarButton

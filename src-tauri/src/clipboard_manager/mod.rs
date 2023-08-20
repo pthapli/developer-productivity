@@ -2,7 +2,7 @@ use clipboard::{ClipboardContext, ClipboardProvider};
 use clipboard_master::{CallbackResult, ClipboardHandler, Master};
 use tauri::Window;
 
-use crate::storage;
+use crate::storage::{self, ClipboardItemData};
 
 struct Handler {
     window: Window,
@@ -43,7 +43,8 @@ impl ClipboardHandler for Handler {
         println!("value_read_from_clipboard : {}", value_read_from_clipboard);
         // println!("VALUE READ FROM CLIPBOARD -> {:?}", ctx.get_contents().unwrap());
 
-        storage::write_item_to_clipboard_storage(value_read_from_clipboard);
+        storage::write_item_to_clipboard_storage(ClipboardItemData{value : value_read_from_clipboard
+            ,context : "".to_string()});
 
         //todo : emit the event for the frontend to rerender the UI
         self.bero(&self.window);

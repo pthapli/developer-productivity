@@ -3,7 +3,7 @@
 // use tauri::ClipboardManager;
 
 use crate::clipboard_manager;
-use crate::storage::{self, Data};
+use crate::storage::{self, ClipboardItemData, Data};
 /**
 *
 * 1. Save the clipboard values to local storage
@@ -12,7 +12,7 @@ use crate::storage::{self, Data};
 */
 
 #[tauri::command]
-pub fn get_clipboard_entries() -> Vec<String> {
+pub fn get_clipboard_entries() -> Vec<ClipboardItemData> {
     println!("Running mister clipper");
 
     return storage::get_last_10_items_from_clipboard();
@@ -20,23 +20,23 @@ pub fn get_clipboard_entries() -> Vec<String> {
 }
 
 #[tauri::command]
-pub fn save_bookmark(item: String) {
+pub fn save_bookmark(item: ClipboardItemData) {
     println!("====================================");
-    println!("SAVING BOOKMARK ->{}", item);
+    println!("SAVING BOOKMARK ->{:?}", item);
     println!("====================================");
     return storage::add_item_to_bookmark_list(item);
 }
 
 #[tauri::command]
-pub fn delete_saved_bookmark(item: String) {
+pub fn delete_saved_bookmark(item: ClipboardItemData) {
     println!("====================================");
-    println!("DELETE BOOKMARK ->{}", item);
+    println!("DELETE BOOKMARK ->{:?}", item);
     println!("====================================");
     return storage::delete_item_from_bookmark_list(item);
 }
 
 #[tauri::command]
-pub fn get_bookmark_list() -> Vec<String> {
+pub fn get_bookmark_list() -> Vec<ClipboardItemData> {
     println!("====================================");
     println!("GETTING BOOKMARK LIST->");
     println!("====================================");
