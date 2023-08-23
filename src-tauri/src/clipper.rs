@@ -16,7 +16,6 @@ pub fn get_clipboard_entries() -> Vec<ClipboardItemData> {
     println!("Running mister clipper");
 
     return storage::get_last_10_items_from_clipboard();
-    // return vec!["Hi".to_string(),"How are you".to_string()];
 }
 
 #[tauri::command]
@@ -39,6 +38,14 @@ pub fn delete_saved_bookmark(item: ClipboardItemData) {
 pub fn get_bookmark_list() -> Vec<ClipboardItemData> {
     println!("====================================");
     println!("GETTING BOOKMARK LIST->");
+    println!("====================================");
+    return storage::get_bookmark_list();
+}
+
+#[tauri::command]
+pub fn update_bookmark_context() -> Vec<ClipboardItemData> {
+    println!("====================================");
+    println!("UPDATING BOOKMARK CONTEXT->");
     println!("====================================");
     return storage::get_bookmark_list();
 }

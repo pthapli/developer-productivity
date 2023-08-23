@@ -158,6 +158,10 @@ pub fn get_bookmark_list() -> Vec<ClipboardItemData> {
     vec
 }
 
+pub fn update_bookmark_context(clipboard_item_data: ClipboardItemData) { 
+
+}
+
 pub fn add_item_to_bookmark_list(clipboard_item_data: ClipboardItemData){
     let mut vec = read_vector_from_file("/Users/pthapli/Desktop/scripts/linux/bookmarks.json")
         .unwrap_or(Vec::new());
