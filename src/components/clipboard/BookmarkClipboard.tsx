@@ -15,18 +15,6 @@ export const BookmarkClipboard = () => {
 
   const [deleteItem, setDeleteItem] = useState(true);
 
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseOver = () => {
-    console.log("handleMouseOver");
-    setIsHovered(true);
-  };
-
-  const handleMouseOut = () => {
-    console.log("handleMouseOut");
-    setIsHovered(false);
-  };
-
   // Effect to load initial items
   useEffect(() => {
     console.log("Running effect for getting the clipboard data bero");
@@ -61,12 +49,11 @@ export const BookmarkClipboard = () => {
                 onClick={() => {
                   listItemClickHandler(item["value"]);
                 }}
-                onMouseOver={handleMouseOver}
-                onMouseOut={handleMouseOut}
+                // onMouseOver={handleMouseOver}
+                // onMouseOut={handleMouseOut}
                 text={item?.["value"]}
+                context={item?.["context"]}
               />
-              Hover Me
-              {isHovered && <div>This is the floating text.</div>}
               <button
                 onClick={() => {
                   handleBookmarkDelete(item);
