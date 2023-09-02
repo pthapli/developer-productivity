@@ -15,6 +15,7 @@ export const CurrentClipboard = () => {
   // State to store the list items
 
   const [listItems, setListItems] = useState([{ value: "test", context: "" }]);
+  const [showModal, setShowModal] = useState(false);
 
   // Effect to load initial items
   useEffect(() => {
@@ -39,7 +40,9 @@ export const CurrentClipboard = () => {
 
   //Function to save bookmarked items
   const handleBookmarkClick = (item: { value: string; context: string }) => {
-    invoke("save_bookmark", { item })
+    invoke("save_bookmark", {
+      item: { value: item.value, context: "TESTING context" },
+    })
       .then(() => {
         console.log("Bookmark saved");
       })
@@ -95,8 +98,10 @@ export const CurrentClipboard = () => {
                   listItemClickHandler(item.value);
                 }}
                 text={item.value}
+                context={item.context}
               />
 
+              {showModal && <div>modal bero</div>}
               <StarButton
                 onClick={() => {
                   handleBookmarkClick(item);

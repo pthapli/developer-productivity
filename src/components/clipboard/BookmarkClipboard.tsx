@@ -49,10 +49,9 @@ export const BookmarkClipboard = () => {
                 onClick={() => {
                   listItemClickHandler(item["value"]);
                 }}
-                // onMouseOver={handleMouseOver}
-                // onMouseOut={handleMouseOut}
                 text={item?.["value"]}
                 context={item?.["context"]}
+                allowHover={true}
               />
               <button
                 onClick={() => {

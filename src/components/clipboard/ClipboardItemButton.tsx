@@ -4,23 +4,25 @@ type Props = {
   onClick: any;
   text: string;
   context: string;
+  allowHover?: boolean;
 };
 
 export const ClipboardItemButton: React.FC<Props> = ({
   onClick,
   text,
   context,
+  allowHover,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseOver = () => {
     console.log("handleMouseOver");
-    setIsHovered(true);
+    allowHover && setIsHovered(true);
   };
 
   const handleMouseOut = () => {
     console.log("handleMouseOut");
-    setIsHovered(false);
+    allowHover && setIsHovered(false);
   };
   return (
     <>
