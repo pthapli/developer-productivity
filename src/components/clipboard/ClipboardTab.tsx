@@ -5,10 +5,13 @@ import { CurrentClipboard } from "./CurrentClipboard";
 import { BookmarkClipboard } from "./BookmarkClipboard";
 import { Column } from "../wrappers/column";
 import { ScrollWrapper } from "../utility/wrapper";
+import { useState } from "react";
 
 function ClipboardTab() {
   console.log("RENDERING ClipboardTab");
   const navigate = useNavigate();
+  const [showContext, setShowContext] = useState(false);
+  const [contextValue, setContextValue] = useState("");
   return (
     <div
       style={{
@@ -19,6 +22,7 @@ function ClipboardTab() {
       <Column>
         <button onClick={() => navigate("/")}>Go back buddy</button>
 
+        {showContext && <p>{contextValue}</p>}
         <Tabs>
           <Tab title="Current Clipboard">
             <ScrollWrapper>
@@ -27,7 +31,10 @@ function ClipboardTab() {
           </Tab>
           <Tab title="Saved Clipboard">
             <ScrollWrapper>
-              <BookmarkClipboard />
+              <BookmarkClipboard
+                setContextValue={setContextValue}
+                setShowContext={setShowContext}
+              />
             </ScrollWrapper>
           </Tab>
         </Tabs>

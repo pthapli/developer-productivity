@@ -5,6 +5,8 @@ type Props = {
   text: string;
   context: string;
   allowHover?: boolean;
+  setContextValue?: any;
+  setShowContext?: any;
 };
 
 export const ClipboardItemButton: React.FC<Props> = ({
@@ -12,20 +14,33 @@ export const ClipboardItemButton: React.FC<Props> = ({
   text,
   context,
   allowHover,
+  setContextValue,
+  setShowContext,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseOver = () => {
     console.log("handleMouseOver");
-    allowHover && setIsHovered(true);
+    if (allowHover) {
+      setIsHovered(true);
+      setShowContext(true);
+      setContextValue(context);
+    }
+    // allowHover && setIsHovered(true) && setShowContext(context);
   };
 
   const handleMouseOut = () => {
     console.log("handleMouseOut");
-    allowHover && setIsHovered(false);
+    // allowHover && setIsHovered(false);
+    if (allowHover) {
+      setIsHovered(false);
+      setShowContext(false);
+      setContextValue(context); //not allowed
+    }
   };
   return (
     <>
+      {/* {isHovered && <div> {context || "bero"}</div>} */}
       <button
         onClick={onClick}
         onMouseOver={handleMouseOver}
@@ -34,8 +49,6 @@ export const ClipboardItemButton: React.FC<Props> = ({
       >
         {text}
       </button>
-
-      {isHovered && <div> {context || "bero"}</div>}
     </>
   );
 };

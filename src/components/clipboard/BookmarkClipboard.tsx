@@ -6,8 +6,14 @@ import { ClipboardItemButton } from "./ClipboardItemButton";
 import { Divider } from "../utility/divider";
 
 type TlistItem = { value: string; context: string };
-
-export const BookmarkClipboard = () => {
+type Props = {
+  setContextValue: any;
+  setShowContext: any;
+};
+export const BookmarkClipboard: React.FC<Props> = ({
+  setContextValue,
+  setShowContext,
+}) => {
   // Call the rust backend to fetch the list of clipboard items
 
   // State to store the list items
@@ -52,6 +58,8 @@ export const BookmarkClipboard = () => {
                 text={item?.["value"]}
                 context={item?.["context"]}
                 allowHover={true}
+                setContextValue={setContextValue}
+                setShowContext={setShowContext}
               />
               <button
                 onClick={() => {

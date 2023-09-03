@@ -8,6 +8,7 @@ import { Divider } from "../utility/divider";
 import { ClipboardItemButton } from "./ClipboardItemButton";
 
 import { emit, listen } from "@tauri-apps/api/event";
+import { ContextModal } from "./ContextModal";
 
 export const CurrentClipboard = () => {
   // Call the rust backend to fetch the list of clipboard items
@@ -16,6 +17,9 @@ export const CurrentClipboard = () => {
 
   const [listItems, setListItems] = useState([{ value: "test", context: "" }]);
   const [showModal, setShowModal] = useState(false);
+
+  const [modalText, setModalText] = useState("");
+  const [modalContext, setModalContext] = useState("");
 
   // Effect to load initial items
   useEffect(() => {
@@ -40,15 +44,18 @@ export const CurrentClipboard = () => {
 
   //Function to save bookmarked items
   const handleBookmarkClick = (item: { value: string; context: string }) => {
-    invoke("save_bookmark", {
-      item: { value: item.value, context: "TESTING context" },
-    })
-      .then(() => {
-        console.log("Bookmark saved");
-      })
-      .catch((error) => {
-        console.log("Error ", error);
-      });
+    setModalContext(item.context);
+    setModalText(item.value);
+    setShowModal(true);
+    // invoke("save_bookmark", {
+    //   item: { value: item.value, context: "TESTING context" },
+    // })
+    //   .then(() => {
+    //     console.log("Bookmark saved");
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error ", error);
+    //   });
   };
 
   //receive event from rust backend to rerender the UI when a copy event happens
@@ -89,29 +96,42 @@ export const CurrentClipboard = () => {
 
   return (
     <div>
-      <ul style={{ listStyle: "none", margin: "0 20px 0 20px", padding: "0" }}>
-        {listItems.map((item, index) => (
-          <li key={index}>
-            <RowEvenlySpace>
-              <ClipboardItemButton
-                onClick={() => {
-                  listItemClickHandler(item.value);
-                }}
-                text={item.value}
-                context={item.context}
-              />
+      {showModal && (
+        <ContextModal
+          text={modalText}
+          context={modalContext}
+          showModal={showModal}
+          updateShowModal={() => {
+            setShowModal(!showModal);
+          }}
+        />
+      )}
+      {!showModal && (
+        <ul
+          style={{ listStyle: "none", margin: "0 20px 0 20px", padding: "0" }}
+        >
+          {listItems.map((item, index) => (
+            <li key={index}>
+              <RowEvenlySpace>
+                <ClipboardItemButton
+                  onClick={() => {
+                    listItemClickHandler(item.value);
+                  }}
+                  text={item.value}
+                  context={item.context}
+                />
 
-              {showModal && <div>modal bero</div>}
-              <StarButton
-                onClick={() => {
-                  handleBookmarkClick(item);
-                }}
-              />
-            </RowEvenlySpace>
-            <Divider />
-          </li>
-        ))}
-      </ul>
+                <StarButton
+                  onClick={() => {
+                    handleBookmarkClick(item);
+                  }}
+                />
+              </RowEvenlySpace>
+              <Divider />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
