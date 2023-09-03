@@ -58,8 +58,8 @@ export const BookmarkClipboard: React.FC<Props> = ({
                 text={item?.["value"]}
                 context={item?.["context"]}
                 allowHover={true}
-                setContextValue={setContextValue}
-                setShowContext={setShowContext}
+                // setContextValue={setContextValue}
+                // setShowContext={setShowContext}
               />
               <button
                 onClick={() => {
